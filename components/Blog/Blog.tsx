@@ -7,14 +7,9 @@ builder.init(process.env.NEXT_PUBLIC_BUILDER_API_KEY!);
 
 interface BlogArticle {
 	title: string;
-	slug: string;
-	image: string;
-	date: number;
-	content: string;
-	blurb?: string;
 	author?: {
 		value: {
-			data: { fullname: string; image?: string; };
+			data: { fullname: string; };
 		};
 	};
 }
@@ -24,19 +19,20 @@ interface BlogProps {
 }
 
 function Blog({ content }: BlogProps) {
+	// Must add `options={{ enrich: true }}` to <BuilderContent> to match default behavior of Content API
 	return (
 		<BuilderContent model="blog-article" content={content}>
-			{(data: BlogArticle, loading, fullContent) => {
+			{(data: BlogArticle) => {
+				console.log(data);
 				return (
 					<>
 						<div>
 							<h1>{data.title}</h1>
-							<h4>{data.blurb}</h4>
-							<div>
-								<small>By {data.author?.value.data.fullname}</small>
-								<br />
-								<span>{new Date(data.date).toLocaleString()}</span>
-							</div>
+							{data.author && (
+								<div>
+									<small>By {data.author?.value.data.fullname}</small>
+								</div>
+							)}
 						</div>
 					</>
 				);
