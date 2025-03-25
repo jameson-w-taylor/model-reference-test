@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { builder } from '@builder.io/sdk';
 import { BuilderContent } from "@builder.io/react";
@@ -13,36 +13,36 @@ interface BlogArticle {
 	content: string;
 	blurb?: string;
 	author?: {
-    value: {
-      data: { fullname: string; image?: string; };
-    };
-  };
+		value: {
+			data: { fullname: string; image?: string; };
+		};
+	};
 }
 
 interface BlogProps {
-  content: any;
+	content: any;
 }
 
 function Blog({ content }: BlogProps) {
-  return (
-    <BuilderContent model="blog-article" content={content}>
-      {(data: BlogArticle, loading, fullContent) => {
-        return (
-          <>
-            <div>
-              <h1>{data.title}</h1>
-              <h4>{data.blurb}</h4>
-              <div>
-                <small>By {data.author?.value.data.fullname}</small>
-                <br />
-                <span>{new Date(data.date).toLocaleString()}</span>
-              </div>
-            </div>
-          </>
-        );
-      }}
-    </BuilderContent>
-  );
+	return (
+		<BuilderContent model="blog-article" content={content}>
+			{(data: BlogArticle, loading, fullContent) => {
+				return (
+					<>
+						<div>
+							<h1>{data.title}</h1>
+							<h4>{data.blurb}</h4>
+							<div>
+								<small>By {data.author?.value.data.fullname}</small>
+								<br />
+								<span>{new Date(data.date).toLocaleString()}</span>
+							</div>
+						</div>
+					</>
+				);
+			}}
+		</BuilderContent>
+	);
 }
 
 export default Blog;
