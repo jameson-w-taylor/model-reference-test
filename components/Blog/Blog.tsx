@@ -1,6 +1,6 @@
 'use client';
 
-import { builder } from '@builder.io/sdk';
+import { builder, BuilderContent as Content } from '@builder.io/sdk';
 import { BuilderContent } from "@builder.io/react";
 
 builder.init(process.env.NEXT_PUBLIC_BUILDER_API_KEY!);
@@ -15,7 +15,7 @@ interface BlogArticle {
 }
 
 interface BlogProps {
-	content: any;
+	content: Content;
 }
 
 function Blog({ content }: BlogProps) {
@@ -23,7 +23,7 @@ function Blog({ content }: BlogProps) {
 	return (
 		<BuilderContent model="blog-article" content={content}>
 			{(data: BlogArticle) => {
-				console.log(data);
+				console.log('<BuilderContent>: ', data);
 				return (
 					<>
 						<div>

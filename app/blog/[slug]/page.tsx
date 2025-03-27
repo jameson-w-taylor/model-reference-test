@@ -1,4 +1,4 @@
-import { builder } from '@builder.io/sdk';
+import { builder, BuilderContent as Content } from '@builder.io/sdk';
 import Blog from '@/components/Blog/Blog';
 
 // Builder Public API Key set in .env file
@@ -10,15 +10,15 @@ interface PageProps {
 
 export async function generateStaticParams() {
 	const slugs = await builder.getAll('blog-article', {
-		options: { noTargeting: true },
+		options: { noTargeting: true, enrich: false },
 		fields: 'data.slug'
 	});
-	return slugs.map(article => ({ slug: `/blog/${article.data?.slug}`}));
+	return slugs.map(article => ({ slug: article.data?.slug }));
 }
 
 export default async function Page({ params }: PageProps) {
 	const { slug } = await params;
-	const content = await builder
+	const content: Content = await builder
 		.get('blog-article', {
 			query: {
 				'data.slug': slug
@@ -26,7 +26,7 @@ export default async function Page({ params }: PageProps) {
 		})
 		.toPromise();
 
-	console.log(content);
+	console.log('Content API: ', content);
 
   return (
 		<>
