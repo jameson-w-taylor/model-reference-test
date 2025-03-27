@@ -18,17 +18,14 @@ export async function generateStaticParams() {
 
 export default async function Page({ params }: PageProps) {
 	const { slug } = await params;
-	const content: Content = await builder
-		.get('blog-article', {
-			query: {
-				'data.slug': slug
-			},
-		})
-		.toPromise();
+	const content: Content = await builder.get('blog-article', {
+		options: { enrich: true },
+		query: { 'data.slug': slug }
+	}).toPromise();
 
 	console.log('Content API: ', content);
 
-  return (
+	return (
 		<>
 			<div>My Header</div>
 			<Blog content={content} />

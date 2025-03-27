@@ -9,7 +9,7 @@ interface BlogArticle {
 	title: string;
 	author?: {
 		value: {
-			data: { fullname: string; };
+			data: { fullname: string; nestedReference?: any; };
 		};
 	};
 }
@@ -21,7 +21,7 @@ interface BlogProps {
 function Blog({ content }: BlogProps) {
 	// Must add `options={{ enrich: true }}` to <BuilderContent> to match default behavior of Content API
 	return (
-		<BuilderContent model="blog-article" content={content}>
+		<BuilderContent model="blog-article" content={content} options={{ enrich: true }}>
 			{(data: BlogArticle) => {
 				console.log('<BuilderContent>: ', data);
 				return (
